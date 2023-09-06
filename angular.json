@@ -30,6 +30,7 @@
               "projects/user/src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/scss/bootstrap.scss",
               "projects/user/src/styles.scss"
             ],
             "scripts": []
@@ -127,6 +128,7 @@
               "projects/admin/src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/scss/bootstrap.scss",
               "projects/admin/src/styles.scss"
             ],
             "scripts": []
