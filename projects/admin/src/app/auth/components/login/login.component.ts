@@ -41,9 +41,9 @@ export class LoginComponent {
     });
   }
   login() {
+    this.spinner.show();
     this.service.login(this.loginForm.value).subscribe(
       (res) => {
-        this.spinner.show();
         this.toastr.success('Hello world!', 'Toastr fun!');
         this.router.navigate(['/tasks']);
         this.spinner.hide();
