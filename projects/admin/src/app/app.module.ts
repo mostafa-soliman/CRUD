@@ -11,6 +11,7 @@ import {
   ToastNoAnimationModule,
 } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ToastNoAnimationModule.forRoot(),
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     BrowserAnimationsModule,
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

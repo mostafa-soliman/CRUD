@@ -27,6 +27,7 @@ export class LoginComponent {
   }
 
   createForm() {
+    // curate form
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: [
@@ -43,7 +44,8 @@ export class LoginComponent {
   login() {
     this.spinner.show();
     this.service.login(this.loginForm.value).subscribe(
-      (res) => {
+      (res: any) => {
+        localStorage.setItem('token', res.token);
         this.toastr.success('Hello world!', 'Toastr fun!');
         this.router.navigate(['/tasks']);
         this.spinner.hide();

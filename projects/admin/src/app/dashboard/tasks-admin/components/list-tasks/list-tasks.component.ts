@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { TasksService } from '../../services/tasks.service';
 export interface PeriodicElement {
   title: string;
   user: string;
@@ -71,6 +72,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     deadLineDate: '10-11-2022',
   },
 ];
+// **************************************************************
 @Component({
   selector: 'app-list-tasks',
   templateUrl: './list-tasks.component.html',
@@ -86,7 +88,7 @@ export class ListTasksComponent implements OnInit {
     'actions',
   ];
   dataSource = ELEMENT_DATA;
-  tasksFilter!: FormGroup;
+  newTaskForm!: FormGroup;
   users: any = [
     { name: 'Moahmed', id: 1 },
     { name: 'Ali', id: 2 },
@@ -98,25 +100,38 @@ export class ListTasksComponent implements OnInit {
     { name: 'Complete', id: 1 },
     { name: 'In-Prossing', id: 2 },
   ];
-  constructor(public dialog: MatDialog, private fb: FormBuilder) {}
+  constructor(
+    private service: TasksService,
+    public dialog: MatDialog,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.createform();
+    this.getAllTasks();
   }
 
   createform() {
-    this.tasksFilter = this.fb.group({
-      title: [''],
-      userId: [''],
-      fromDate: [''],
-      toDate: [''],
+    this.newTaskForm = this.fb.group({
+      title: ['', [Validators.required]],
+      userId: ['', [Validators.required]],
+      image: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      deadline: ['', [Validators.required]],
     });
   }
 
-  getAllTasks() {}
+  getAllTasks() {
+    this.service.getAllTasks().subscribe(
+      (res) => {},
+      (error) => {}
+    );
+  }
   addTask() {
+    // from angular material
     const dialogRef = this.dialog.open(AddTaskComponent, {
       width: '750px',
+      // data:
     });
 
     dialogRef.afterClosed().subscribe((result) => {
