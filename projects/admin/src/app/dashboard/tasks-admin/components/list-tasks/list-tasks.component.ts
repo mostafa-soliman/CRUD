@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { TasksService } from '../../services/tasks.service';
@@ -72,7 +72,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     deadLineDate: '10-11-2022',
   },
 ];
-// **************************************************************
+// ******************************************
 @Component({
   selector: 'app-list-tasks',
   templateUrl: './list-tasks.component.html',
@@ -88,7 +88,7 @@ export class ListTasksComponent implements OnInit {
     'actions',
   ];
   dataSource = ELEMENT_DATA;
-  newTaskForm!: FormGroup;
+  tasksFilter!: FormGroup;
   users: any = [
     { name: 'Moahmed', id: 1 },
     { name: 'Ali', id: 2 },
@@ -107,19 +107,18 @@ export class ListTasksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.createform();
+    // this.createform();
     this.getAllTasks();
   }
 
-  createform() {
-    this.newTaskForm = this.fb.group({
-      title: ['', [Validators.required]],
-      userId: ['', [Validators.required]],
-      image: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      deadline: ['', [Validators.required]],
-    });
-  }
+  // createform() {
+  //   this.tasksFilter = this.fb.group({
+  //     title: [''],
+  //     userId: [''],
+  //     fromDate: [''],
+  //     toDate: [''],
+  //   });
+  // }
 
   getAllTasks() {
     this.service.getAllTasks().subscribe(
