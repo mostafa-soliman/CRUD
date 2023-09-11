@@ -8,6 +8,13 @@ button {
     font-size: 20px;
   }
 }
+table {
+  img {
+    padding: 5px;
+    width: 70px !important;
+    height: 70px !important;
+  }
+}
 
 :host ::ng-deep {
   table {

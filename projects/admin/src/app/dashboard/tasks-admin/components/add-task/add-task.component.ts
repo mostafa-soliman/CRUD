@@ -75,18 +75,17 @@ export class AddTaskComponent implements OnInit {
       (res) => {
         this.toastr.success('Success Created Task', 'Success');
         this.spinner.hide();
-        this.dialog.close();
+        this.dialog.close(true);
       },
       (error) => {
         this.spinner.hide();
-        console.log(error);
         this.toastr.error(error.error.message);
       }
     );
   }
-  clossesDialog() {
-    this.dialog.close();
-  }
+  // clossesDialog() {
+  //   this.dialog.close(true);
+  // }
 
   // *** get data from reactive form (key , value) Dynamic
 

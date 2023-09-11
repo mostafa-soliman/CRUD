@@ -18,10 +18,15 @@ export class TasksService {
     return this.http.get('https://mostafa-2a48.onrender.com/tasks/all-tasks', {
       headers,
     });*/
-    return this.http.get(environment.baseAPI + '/all-tasks');
+    // return this.http.get(environment.baseAPI + '/all-tasks');
+    return this.http.get('https://mostafa-2a48.onrender.com/tasks/all-tasks');
   }
   createTask(model: any) {
-    return this.http.post(environment.baseAPI + '/add-task', model);
+    // return this.http.post(environment.baseAPI + '/add-task', model);
+    return this.http.post(
+      'https://mostafa-2a48.onrender.com/tasks/add-task',
+      model
+    );
   }
 }
 
