@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { TasksService } from '../../services/tasks.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -40,6 +41,7 @@ export class ListTasksComponent implements OnInit {
     { name: 'In-Prossing', id: 2 },
   ];
   constructor(
+    // استقبل الداتا من دالة تحديث التاسك
     private service: TasksService,
     public dialog: MatDialog,
     private fb: FormBuilder,
@@ -48,7 +50,6 @@ export class ListTasksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.createform();
     this.getAllTasks();
   }
 
@@ -58,9 +59,10 @@ export class ListTasksComponent implements OnInit {
       (res: any) => {
         this.dataSource = this.mappingTasks(res.tasks);
         this.spinner.hide();
+        // this.toastr.success('Success get Task', 'Success');
       },
       (error) => {
-        this.toastr.error(error.error.massage);
+        this.toastr.error(error.error.message);
         this.spinner.hide();
       }
     );
@@ -78,6 +80,7 @@ export class ListTasksComponent implements OnInit {
     // from angular material
     const dialogRef = this.dialog.open(AddTaskComponent, {
       width: '750px',
+      disableClose: true,
       // data:
     });
 
@@ -86,5 +89,34 @@ export class ListTasksComponent implements OnInit {
         this.getAllTasks();
       }
     });
+  }
+  deleteTask(id: any) {
+    this.spinner.show();
+    this.service.deleteTask(id).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.getAllTasks();
+        this.toastr.success('Success Deleted Task', 'Success');
+      },
+      (error) => {
+        this.toastr.error(error.error.message);
+        this.spinner.hide();
+      }
+    );
+  }
+  updateTask(element: any) {
+    // from angular material
+    const dialogRef = this.dialog.open(AddTaskComponent, {
+      width: '750px',
+      data: element,
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.getAllTasks();
+      }
+    });
+    // console.log(dialogRef.componentInstance.data);
   }
 }

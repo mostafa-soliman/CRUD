@@ -64,17 +64,23 @@
   <footer class="tw-p-6">
     <div class="d-flex justify-content-center align-items-center">
       <button
-        mat-flat-button
         class="btn btn-success py-1 px-5 mx-2"
         (click)="createTask()"
         [disabled]="newTaskForm.invalid"
+        *ngIf="!data"
       >
         Create
       </button>
-
-      <button mat-flat-button class="btn btn-danger py-1 px-5" matDialogClose>
-        Close
+      <button
+        class="btn btn-success py-1 px-5 mx-2"
+        (click)="updataTask()"
+        [disabled]="newTaskForm.invalid"
+        *ngIf="data"
+      >
+        UpDate
       </button>
+
+      <button class="btn btn-danger py-1 px-5" (click)="close()">Close</button>
     </div>
   </footer>
 </div>

@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MatDialog,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { TasksService } from '../../services/tasks.service';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationComponent } from '../confirmation/confirmation.component';
 
 @Component({
   selector: 'app-add-task',
@@ -14,7 +19,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class AddTaskComponent implements OnInit {
   newTaskForm!: FormGroup;
   fileName: string = '';
+  formValues: any = '';
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public dialog: MatDialogRef<AddTaskComponent>,
     public matDialog: MatDialog,
@@ -31,18 +38,34 @@ export class AddTaskComponent implements OnInit {
     { name: 'Zain', id: '64fdda6e676bf778ff8e1add' },
   ];
   ngOnInit(): void {
+    // console.log('AT_DIALOG_DATA from list task 39' + JSON.stringify(this.data));
+
     this.createform();
   }
 
   createform() {
     this.newTaskForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(5)]],
-      userId: ['', [Validators.required]],
-      image: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      deadline: ['', [Validators.required]],
+      title: [
+        this.data?.title || '',
+        [Validators.required, Validators.minLength(5)],
+      ],
+      userId: [this.data?.userId?._id || '', [Validators.required]],
+      image: [this.data?.image || '', [Validators.required]],
+      description: [this.data?.description || '', [Validators.required]],
+      deadline: [
+        // اعد صياغة التاريح لصلح عرضه مرة أخي
+        this.data
+          ? new Date(
+              this.data?.deadline.split('-').reverse().join('-')
+            ).toISOString()
+          : '',
+        [Validators.required],
+      ],
     });
+    // اضفت القيمة الابتدائية فى formvalues
+    this.formValues = this.newTaskForm.value;
   }
+
   // selectImg(event: any) {
   //   this.fileName = event.target.value;
   //   this.newTaskForm.get('image')?.setValue(event.target.file[0]);
@@ -53,9 +76,10 @@ export class AddTaskComponent implements OnInit {
     if (file) {
       this.fileName = file.name;
       this.newTaskForm.get('image')?.setValue(file); // تعيين الصورة ككائن File
-      console.log(event);
+      // console.log(event);
     }
   }
+
   createTask() {
     this.spinner.show();
     // console.log(this.newTaskForm.value);
@@ -82,6 +106,43 @@ export class AddTaskComponent implements OnInit {
         this.toastr.error(error.error.message);
       }
     );
+  }
+  updataTask() {
+    this.spinner.show();
+    let model = this.prepereFormData();
+    this.service.updateTask(model, this.data._id).subscribe(
+      (res) => {
+        this.toastr.success('Success update Task', 'Success');
+        this.spinner.hide();
+        this.dialog.close(true);
+      },
+      (error) => {
+        this.spinner.hide();
+        this.toastr.error(error.error.message);
+      }
+    );
+  }
+  close() {
+    // مقارنة بين المحتوي قبل التعديل وبعدها
+    let hasChanges: boolean = false;
+    Object.keys(this.formValues).forEach((item) => {
+      if (this.formValues[item] != this.newTaskForm.value[item])
+        hasChanges = true;
+    });
+    if (hasChanges) {
+      // from angular material
+      const dialogRef = this.matDialog.open(ConfirmationComponent, {
+        width: '750px',
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result == true) {
+        }
+      });
+      // console.log(dialogRef.componentInstance.data);
+    } else {
+      this.dialog.close();
+    }
   }
   // clossesDialog() {
   //   this.dialog.close(true);
@@ -110,7 +171,7 @@ export class AddTaskComponent implements OnInit {
   // ********************فهم تحوول الصورة الي بينري كان ضعيف يحتاج الي مراجعة وفهم *****************
   prepereFormData() {
     let newData = moment(this.newTaskForm.value['deadline']).format(
-      'DD/MM/YYYY'
+      'DD-MM-YYYY'
     );
 
     const formData = new FormData();

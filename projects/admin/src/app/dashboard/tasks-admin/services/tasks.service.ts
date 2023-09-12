@@ -28,6 +28,18 @@ export class TasksService {
       model
     );
   }
+  updateTask(model: any, id: any) {
+    // return this.http.post(environment.baseAPI + '/add-task', model);
+    return this.http.put(
+      'https://mostafa-2a48.onrender.com/tasks/edit-task/' + id,
+      model
+    );
+  }
+  deleteTask(id: any) {
+    return this.http.delete(
+      'https://mostafa-2a48.onrender.com/tasks/delete-task/' + id
+    );
+  }
 }
 
 // intercepter عبارة عن بوابة بين  الريكوست و الرسبونس وكدة تقدر تنفذ اي لوجيك محتاج تنفذة على كل جزء في المشروع و كمان تهندل كل الايرور اللي جيه من الريكوستات

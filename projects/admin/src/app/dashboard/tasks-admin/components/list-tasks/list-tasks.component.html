@@ -61,7 +61,7 @@
         <td mat-cell *matCellDef="let element; let index = index">
           <img
             [src]="'https://mostafa-2a48.onrender.com/' + element.image"
-            alt=""
+            alt="img-tasks"
           />
         </td>
       </ng-container>
@@ -90,9 +90,21 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef class="w-20"></th>
-        <td mat-cell *matCellDef="let element">
-          <button class="btn btn-warning" mat-raised-button>Update</button>
-          <button mat-raised-button color="warn">Delete</button>
+        <td mat-cell *matCellDef="let element; let index = index">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="updateTask(element)"
+          >
+            Update
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="deleteTask(element._id)"
+          >
+            Delete
+          </button>
         </td>
       </ng-container>
 
