@@ -1,4 +1,9 @@
-import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHandler,
+  HttpHeaders,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'projects/admin/src/environments/environment';
 
@@ -7,7 +12,7 @@ import { environment } from 'projects/admin/src/environments/environment';
 })
 export class TasksService {
   constructor(private http: HttpClient) {}
-  getAllTasks() {
+  getAllTasks(filter: any) {
     // add this 2 line to each request
     /*But it is better to use an interceptor (new file)*/
     /* let headers = new HttpHeaders();
@@ -19,7 +24,15 @@ export class TasksService {
       headers,
     });*/
     // return this.http.get(environment.baseAPI + '/all-tasks');
-    return this.http.get('https://mostafa-2a48.onrender.com/tasks/all-tasks');
+    let params = new HttpParams();
+    Object.entries(filter).forEach(([key, value]: any) => {
+      if (value) {
+        params = params.append(key, value);
+      }
+    });
+    return this.http.get('https://mostafa-2a48.onrender.com/tasks/all-tasks', {
+      params,
+    });
   }
   createTask(model: any) {
     // return this.http.post(environment.baseAPI + '/add-task', model);

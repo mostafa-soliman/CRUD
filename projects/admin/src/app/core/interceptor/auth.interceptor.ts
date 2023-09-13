@@ -7,10 +7,10 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+// I can forward all the responses in my project using this
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor() {}
-  // next ==leave interceptor
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
         'Bearer ' + localStorage.getItem('token')
       ),
     });
-
+    // next ==leave to next interceptor
     return next.handle(newRequest);
   }
 }

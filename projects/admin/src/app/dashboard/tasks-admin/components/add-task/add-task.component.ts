@@ -8,7 +8,6 @@ import {
 import { TasksService } from '../../services/tasks.service';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
 
 @Component({
@@ -26,8 +25,7 @@ export class AddTaskComponent implements OnInit {
     public dialog: MatDialogRef<AddTaskComponent>,
     public matDialog: MatDialog,
     private service: TasksService,
-    private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private toastr: ToastrService
   ) {}
 
   // "mocking data" or "dummy data"
@@ -81,7 +79,6 @@ export class AddTaskComponent implements OnInit {
   }
 
   createTask() {
-    this.spinner.show();
     // console.log(this.newTaskForm.value);
     // In order to be able to send files, you must create formData
     // let formData = new FormData();
@@ -95,32 +92,17 @@ export class AddTaskComponent implements OnInit {
     // formData.append('deadline', this.newTaskForm.value['deadline']);
     // this.service.createTask(formData).subscribe((res) => {});
     let model = this.prepereFormData();
-    this.service.createTask(model).subscribe(
-      (res) => {
-        this.toastr.success('Success Created Task', 'Success');
-        this.spinner.hide();
-        this.dialog.close(true);
-      },
-      (error) => {
-        this.spinner.hide();
-        this.toastr.error(error.error.message);
-      }
-    );
+    this.service.createTask(model).subscribe((res) => {
+      this.toastr.success('Success Created Task', 'Success');
+      this.dialog.close(true);
+    });
   }
   updataTask() {
-    this.spinner.show();
     let model = this.prepereFormData();
-    this.service.updateTask(model, this.data._id).subscribe(
-      (res) => {
-        this.toastr.success('Success update Task', 'Success');
-        this.spinner.hide();
-        this.dialog.close(true);
-      },
-      (error) => {
-        this.spinner.hide();
-        this.toastr.error(error.error.message);
-      }
-    );
+    this.service.updateTask(model, this.data._id).subscribe((res) => {
+      this.toastr.success('Success update Task', 'Success');
+      this.dialog.close(true);
+    });
   }
   close() {
     // مقارنة بين المحتوي قبل التعديل وبعدها

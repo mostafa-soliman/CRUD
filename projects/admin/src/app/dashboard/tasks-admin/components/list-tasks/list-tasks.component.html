@@ -1,4 +1,5 @@
 <div class="mt-4">
+  <!-- add task -->
   <div class="d-flex justify-content-end">
     <button class="addTask" mat-raised-button (click)="addTask()">
       Add Task
@@ -6,39 +7,56 @@
   </div>
 
   <form>
+    <!-- filtration -->
     <div class="row mt-3">
+      <!-- filtration by search-->
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Search</mat-label>
-          <input matInput placeholder="title search" />
+          <input
+            matInput
+            placeholder="title search"
+            (keyup)="filter($event.target, 'keyword')"
+          />
         </mat-form-field>
       </div>
+      <!-- filtration by user-->
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>By User</mat-label>
-          <mat-select>
+          <mat-select (selectionChange)="filter($event, 'userId')">
             <mat-option *ngFor="let user of users" [value]="user?.id">
               {{ user?.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+      <!-- filtration by stats-->
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Status</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let item of status" [value]="item?.id">
+          <mat-select (selectionChange)="filter($event, 'status')">
+            <mat-option *ngFor="let item of status" [value]="item?.name">
               {{ item?.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+      <!-- filtration by Date-->
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Enter a date range</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Start date" />
-            <input matEndDate placeholder="End date" />
+            <input
+              matStartDate
+              placeholder="Start date"
+              (dateChange)="filter($event.target, 'fromDate')"
+            />
+            <input
+              matEndDate
+              placeholder="End date"
+              (dateChange)="filter($event.target, 'toDate')"
+            />
           </mat-date-range-input>
           <mat-datepicker-toggle
             matSuffix
@@ -109,7 +127,26 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          columns: displayedColumns
+            | paginate
+              : {
+                  id: 'tasks',
+                  itemsPerPage: 10,
+                  currentPage: page,
+                  totalItems: total
+                }
+        "
+      ></tr>
     </table>
+    <div class="d-flex justify-content-center">
+      <pagination-controls
+        (pageChange)="changePage($event)"
+        id="tasks"
+      ></pagination-controls>
+    </div>
   </div>
 </div>
