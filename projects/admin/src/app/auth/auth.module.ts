@@ -5,6 +5,7 @@ import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthRoutingModule } from './auth-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -12,6 +13,7 @@ import { AuthRoutingModule } from './auth-routing.module';
     MaterialModule,
     AuthRoutingModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,

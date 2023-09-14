@@ -4,9 +4,15 @@ import { CommonModule } from '@angular/common';
 import { ManageUsersRoutingModule } from './manage-users-routing.module';
 import { UsersComponent } from './components/users/users.component';
 import { MaterialModule } from '../../material/material.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [UsersComponent],
-  imports: [CommonModule, MaterialModule, ManageUsersRoutingModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    SharedModule,
+    ManageUsersRoutingModule,
+  ],
 })
 export class ManageUsersModule {}

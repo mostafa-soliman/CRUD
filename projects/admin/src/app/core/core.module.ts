@@ -6,10 +6,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { LoaderInterceptor } from './interceptor/loader.interceptor';
 import { ErrorInterceptor } from './interceptor/error.interceptor';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, CoreRoutingModule],
+  imports: [CommonModule, CoreRoutingModule, SharedModule],
   providers: [
     // make provide in module to interceptor because compile
     {

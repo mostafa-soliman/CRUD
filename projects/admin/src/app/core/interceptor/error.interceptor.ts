@@ -24,7 +24,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.toastr.error(error.error.message);
         if (
           error.error.message == 'jwt expired' ||
-          error.error.message == 'jwt must be provided'
+          error.error.message == 'jwt must be provided' ||
+          error.error.message == 'jwt malformed'
         ) {
           this.router.navigate(['/login']);
           localStorage.removeItem('token');

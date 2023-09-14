@@ -8,6 +8,7 @@ import { ListTasksComponent } from './components/list-tasks/list-tasks.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [AddTaskComponent, ListTasksComponent, ConfirmationComponent],
@@ -15,6 +16,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CommonModule,
     MaterialModule,
     TasksAdminRoutingModule,
+    SharedModule,
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,0 +1,11 @@
+{
+  "tasks":{
+    "addTask":"إضافة مهمة"
+  },
+  "users":{},
+  "general":{
+    "loading":"إنتظار"
+  },
+  "toaster":{},
+  "buttons":{}
+}

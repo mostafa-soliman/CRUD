@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -14,6 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MaterialModule,
     NgxPaginationModule,
     DashboardRoutingModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
   ],
