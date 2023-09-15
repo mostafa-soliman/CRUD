@@ -6,6 +6,7 @@ import { AddTaskComponent } from '../add-task/add-task.component';
 import { TasksService } from '../../services/tasks.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
 export interface PeriodicElement {
   title: string;
   user: string;
@@ -44,14 +45,19 @@ export class ListTasksComponent implements OnInit {
     { name: 'Ahmed', id: '64fdda4a676bf778ff8e1ada' },
     { name: 'Zain', id: '64fdda6e676bf778ff8e1add' },
   ];
-
-  status: any = [{ name: 'Complete' }, { name: 'In-Progress' }];
+  // translate in ts
+  // status: any = [{ name: 'Complete' }, { name: 'In-Progress' }];
+  status: any = [
+    { name: this.translate.instant('tasks.Complete') },
+    { name: 'In-Progress' },
+  ];
   constructor(
     // استقبل الداتا من دالة تحديث التاسك
     private service: TasksService,
     public dialog: MatDialog,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {

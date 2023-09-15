@@ -1,6 +1,7 @@
 {
   "tasks":{
-    "addTask":"Add Task"
+    "addTask":"Add Task",
+    "Complete":"Complete"
   },
   "users":{},
   "general":{

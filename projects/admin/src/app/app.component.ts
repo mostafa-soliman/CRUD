@@ -8,7 +8,13 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'admin';
+  lang: any;
   constructor(private translate: TranslateService) {
-    translate.use('ar');
+    if ('language' in localStorage) {
+      this.lang = localStorage.getItem('language');
+      translate.use(this.lang);
+    } else {
+      translate.use(this.translate.defaultLang);
+    }
   }
 }

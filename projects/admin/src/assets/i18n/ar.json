@@ -1,6 +1,7 @@
 {
   "tasks":{
-    "addTask":"إضافة مهمة"
+    "addTask":"إضافة مهمة",
+    "Complete":"مكتمل"
   },
   "users":{},
   "general":{
