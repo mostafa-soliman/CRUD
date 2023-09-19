@@ -2,7 +2,10 @@
   <div class="container">
     <div class="navbar-brand">Tasks</div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div
+      class="collapse navbar-collapse d-flex justify-content-between"
+      id="navbarSupportedContent"
+    >
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <a class="nav-link" routerLink="/tasks" routerLinkActive="active"
@@ -10,8 +13,13 @@
           >
         </li>
       </ul>
-      <div class="nav-item">
-        <a class="nav-link" routerLink="/login">Logout</a>
+      <div class="nav-item d-flex">
+        <a class="nav-link btn" routerLink="/auth/login" (click)="logout()">
+          Logout</a
+        >
+        <a class="nav-link btn" (click)="changeLanguage()"
+          >{{ lang == "en" ? "عربي" : "English" }}
+        </a>
       </div>
     </div>
   </div>

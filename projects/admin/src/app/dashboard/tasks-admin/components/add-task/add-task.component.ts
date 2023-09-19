@@ -34,6 +34,8 @@ export class AddTaskComponent implements OnInit {
     { name: 'Ali', id: '64fdda1c676bf778ff8e1ad7' },
     { name: 'Ahmed', id: '64fdda4a676bf778ff8e1ada' },
     { name: 'Zain', id: '64fdda6e676bf778ff8e1add' },
+    { name: 'mmmm', id: '6508c31c234e1476704d539c' },
+    { name: 'rrrr', id: '6509c1ce31cd9edb38c8f971' },
   ];
   ngOnInit(): void {
     // console.log('AT_DIALOG_DATA from list task 39' + JSON.stringify(this.data));
