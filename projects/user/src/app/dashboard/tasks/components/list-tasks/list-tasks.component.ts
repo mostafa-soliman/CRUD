@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TasksService } from '../../services/tasks.service';
+import { ToastrService } from 'ngx-toastr';
 // export interface PeriodicElement {
 //   title: string;
 //   description: string;
@@ -108,10 +109,12 @@ export class ListTasksComponent {
   };
   userData: any;
   selectStatus: string = 'In-Progress';
+  totalItems: number = 0;
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
-    private service: TasksService
+    private service: TasksService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -141,16 +144,30 @@ export class ListTasksComponent {
       limit: 10,
       status: this.selectStatus,
     };
-    this.service
-      .getUserTasks(this.userData.userId, params)
-      .subscribe((res: any) => {
+    this.service.getUserTasks(this.userData.userId, params).subscribe(
+      (res: any) => {
         this.dataSource = res.tasks;
-      });
+        this.totalItems = res.totalItems;
+      },
+      (error) => {
+        this.dataSource = [];
+      }
+    );
   }
 
   changePage(event: any) {
     this.page = event;
-    // this.filtration['page'] = event;
-    // this.getAllTask s();
+    this.filtration['page'] = event;
+    this.getAllTasks();
+  }
+  Details() {}
+  complete(ele: any) {
+    const MODEL = {
+      id: ele._id,
+    };
+    this.service.completeTask(MODEL).subscribe((res) => {
+      this.getAllTasks();
+      this.toastr.success('Task Complete Successfully', 'success');
+    });
   }
 }

@@ -17,4 +17,10 @@ export class TasksService {
       { params }
     );
   }
+  completeTask(model: any) {
+    return this.http.put(
+      'https://mostafa-2a48.onrender.com/tasks/complete',
+      model
+    );
+  }
 }
