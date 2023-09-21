@@ -21,7 +21,9 @@
       </ul>
 
       <div class="nav-item d-flex">
-        <a class="nav-link btn" routerLink="/login">Logout</a>
+        <a class="nav-link btn" routerLink="/login" (click)="logout()"
+          >Logout</a
+        >
         <a class="nav-link btn" (click)="changeLanguage()"
           >{{ lang == "en" ? "عربي" : "English" }}
         </a>

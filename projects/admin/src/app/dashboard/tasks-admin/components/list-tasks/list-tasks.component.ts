@@ -142,7 +142,7 @@ export class ListTasksComponent implements OnInit {
     let newTasks = data.map((item: any) => {
       return {
         ...item,
-        user: item.userId.username,
+        user: item?.userId?.username || null,
       };
     });
     return newTasks;
