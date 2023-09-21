@@ -40,10 +40,8 @@ export class ListTasksComponent implements OnInit {
   ];
 
   users: any = [
-    { name: 'Moahmed', id: '64fdd97a676bf778ff8e1ad4' },
-    { name: 'Ali', id: '64fdda1c676bf778ff8e1ad7' },
-    { name: 'Ahmed', id: '64fdda4a676bf778ff8e1ada' },
-    { name: 'Zain', id: '64fdda6e676bf778ff8e1add' },
+    { name: 'sssss', id: '650b6667bec48445c4baaaae' },
+    { name: 'qqqq', id: '650b62058ad082a673691dc4' },
   ];
   // translate in ts
   // status: any = [{ name: 'Complete' }, { name: 'In-Progress' }];
@@ -120,7 +118,7 @@ export class ListTasksComponent implements OnInit {
     });
   }
   mappingTasks(data: any[]) {
-    let newTasks = data.map((item) => {
+    let newTasks = data.map((item: any) => {
       return {
         ...item,
         user: item.userId.username,

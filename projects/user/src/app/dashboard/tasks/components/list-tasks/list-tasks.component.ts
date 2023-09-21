@@ -160,7 +160,7 @@ export class ListTasksComponent {
     this.filtration['page'] = event;
     this.getAllTasks();
   }
-  Details() {}
+
   complete(ele: any) {
     const MODEL = {
       id: ele._id,

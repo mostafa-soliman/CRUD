@@ -30,12 +30,8 @@ export class AddTaskComponent implements OnInit {
 
   // "mocking data" or "dummy data"
   users: any = [
-    { name: 'Moahmed', id: '64fdd97a676bf778ff8e1ad4' },
-    { name: 'Ali', id: '64fdda1c676bf778ff8e1ad7' },
-    { name: 'Ahmed', id: '64fdda4a676bf778ff8e1ada' },
-    { name: 'Zain', id: '64fdda6e676bf778ff8e1add' },
-    { name: 'mmmm', id: '6508c31c234e1476704d539c' },
-    { name: 'rrrr', id: '6509c1ce31cd9edb38c8f971' },
+    { name: 'sssss', id: '650b6667bec48445c4baaaae' },
+    { name: 'qqqq', id: '650b62058ad082a673691dc4' },
   ];
   ngOnInit(): void {
     // console.log('AT_DIALOG_DATA from list task 39' + JSON.stringify(this.data));

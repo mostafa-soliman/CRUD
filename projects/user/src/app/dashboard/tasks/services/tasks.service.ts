@@ -23,4 +23,9 @@ export class TasksService {
       model
     );
   }
+  detailsTask(taskId: any) {
+    return this.http.get(
+      'https://mostafa-2a48.onrender.com/tasks/task/' + taskId
+    );
+  }
 }

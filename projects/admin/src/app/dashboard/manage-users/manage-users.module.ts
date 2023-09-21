@@ -5,6 +5,7 @@ import { ManageUsersRoutingModule } from './manage-users-routing.module';
 import { UsersComponent } from './components/users/users.component';
 import { MaterialModule } from '../../material/material.module';
 import { SharedModule } from '../../shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [UsersComponent],
@@ -12,6 +13,7 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     MaterialModule,
     SharedModule,
+    NgxPaginationModule,
     ManageUsersRoutingModule,
   ],
 })
