@@ -7,6 +7,7 @@ import { TasksService } from '../../services/tasks.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
+import { UsersService } from '../../../manage-users/services/users.service';
 export interface PeriodicElement {
   title: string;
   user: string;
@@ -39,10 +40,7 @@ export class ListTasksComponent implements OnInit {
     'actions',
   ];
 
-  users: any = [
-    { name: 'sssss', id: '650b6667bec48445c4baaaae' },
-    { name: 'qqqq', id: '650b62058ad082a673691dc4' },
-  ];
+  users: any = [];
   // translate in ts
   // status: any = [{ name: 'Complete' }, { name: 'In-Progress' }];
   status: any = [
@@ -55,11 +53,34 @@ export class ListTasksComponent implements OnInit {
     public dialog: MatDialog,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private userSerivce: UsersService
+  ) {
+    this.getDataFromSubject();
+  }
 
   ngOnInit(): void {
+    this.getUsers();
     this.getAllTasks();
+  }
+
+  getUsers() {
+    // call request
+    this.userSerivce.getUserData();
+  }
+  getDataFromSubject() {
+    this.userSerivce.userData.subscribe((res: any) => {
+      this.users = this.userMapping(res.data);
+    });
+  }
+  userMapping(data: any[]) {
+    let newArray = data?.map((item) => {
+      return {
+        name: item.username,
+        id: item._id,
+      };
+    });
+    return newArray;
   }
   // filtration
 

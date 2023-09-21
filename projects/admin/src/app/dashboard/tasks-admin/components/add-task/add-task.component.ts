@@ -9,6 +9,7 @@ import { TasksService } from '../../services/tasks.service';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
+import { UsersService } from '../../../manage-users/services/users.service';
 
 @Component({
   selector: 'app-add-task',
@@ -25,18 +26,32 @@ export class AddTaskComponent implements OnInit {
     public dialog: MatDialogRef<AddTaskComponent>,
     public matDialog: MatDialog,
     private service: TasksService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private userSerivce: UsersService
+  ) {
+    this.getDataFromSubject();
+  }
 
   // "mocking data" or "dummy data"
-  users: any = [
-    { name: 'sssss', id: '650b6667bec48445c4baaaae' },
-    { name: 'qqqq', id: '650b62058ad082a673691dc4' },
-  ];
+  users: any = [];
   ngOnInit(): void {
     // console.log('AT_DIALOG_DATA from list task 39' + JSON.stringify(this.data));
 
     this.createform();
+  }
+  getDataFromSubject() {
+    this.userSerivce.userData.subscribe((res: any) => {
+      this.users = this.userMapping(res.data);
+    });
+  }
+  userMapping(data: any[]) {
+    let newArray = data.map((item) => {
+      return {
+        name: item.username,
+        id: item._id,
+      };
+    });
+    return newArray;
   }
 
   createform() {

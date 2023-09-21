@@ -52,26 +52,30 @@ export class UsersComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private translate: TranslateService
-  ) {}
-
-  ngOnInit(): void {
-    this.getUserData();
-    console.log('rrrrrrrrrrr');
+  ) {
+    // call fun get data from subject
+    this.getDataFromSubject();
   }
 
-  getUserData() {
+  ngOnInit(): void {
+    this.getUser();
+  }
+  getUser() {
     const Model = {
       page: this.page,
       limit: 10,
       name: '',
     };
-    this.service.getAllUsers(Model).subscribe((res: any) => {
-      this.totalItem = res.totalItems;
-      console.log(res.totalItems);
-      this.dataSource = res.users;
-      console.log(res.users);
+    // We did not have a subscribe because we did it in the BehaverSubject in users.service.ts
+    this.service.getUserData(Model);
+  }
+  getDataFromSubject() {
+    this.service.userData.subscribe((res: any) => {
+      this.dataSource = res.data;
+      this.totalItem = res.total;
     });
   }
+
   deleteUser(id: string, index: number) {
     if (this.dataSource[index].assignedTasks > 0) {
       this.toastr.error(
@@ -82,14 +86,14 @@ export class UsersComponent implements OnInit {
       this.service.deleteUser(id).subscribe((res) => {
         this.toastr.success('Success Deleted Task', 'Success');
         this.page = 1;
-        this.getUserData();
+        this.getUser();
       });
     }
   }
   changePage(event: any) {
     this.page = event;
     this.filtration['page'] = event;
-    this.getUserData();
+    this.getUser();
   }
   changeUserStatus(id: string, status: string, index: number) {
     const Model: ChangeStatus = {
@@ -106,7 +110,7 @@ export class UsersComponent implements OnInit {
       this.service.changeStatus(Model).subscribe((res) => {
         this.toastr.success('Success Change Status User', 'Success');
         this.page = 1;
-        this.getUserData();
+        this.getUser();
       });
     }
   }
@@ -121,7 +125,7 @@ export class UsersComponent implements OnInit {
         this.filtration['keyword'] = event.value;
         clearTimeout(this.timeOutId);
         this.timeOutId = setTimeout(() => {
-          this.getUserData();
+          this.getUser();
         }, 2000);
 
         break;
@@ -129,13 +133,13 @@ export class UsersComponent implements OnInit {
         this.page = 1;
         this.filtration['page'] = 1;
         this.filtration['userId'] = event.value;
-        this.getUserData();
+        this.getUser();
         break;
       case 'status':
         this.page = 1;
         this.filtration['page'] = 1;
         this.filtration['status'] = event.value.trim();
-        this.getUserData();
+        this.getUser();
         break;
 
       case 'fromDate':
@@ -144,7 +148,7 @@ export class UsersComponent implements OnInit {
         this.filtration['page'] = 1;
         this.filtration[type] = moment(event.value).format('DD-MM-YYYY');
         if (type === 'toDate') {
-          this.getUserData();
+          this.getUser();
         }
         break;
     }
