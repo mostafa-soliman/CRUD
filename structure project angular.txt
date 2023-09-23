@@ -1,0 +1,55 @@
+						structure CRUD systems project
+
+--projects/
+	--admin/src/app/ 						//workspace admin
+		
+		--auth/ 						//module
+			--components/
+				--login/			
+			--context/
+			--dtos/
+			--services/
+				--login.service/
+		--core/ 						//module
+			--interceptor/
+				--auth.interceptor/
+				--error.interceptor/
+				--loader.interceptor/
+		--dashboard/ 						//module
+			--layout/					//component
+			--manage-user/					//module
+				--components/
+					--users/
+					--services/
+					--users.service/
+			--tasks-admin/					//module
+				--components/
+					--add-task/
+					--confirmation/
+					--list-tasks/
+			--services/
+				--tasks.service/
+		--material/ 						//module
+		--shared/ 						//module
+
+	--user/src/app/							//workspace admin
+
+
+
+		--auth/ 						//module
+			--components/
+				--login/
+				--register/
+				--dtos/
+			--services/
+				--login.service/
+		--dashboard/ 						//module
+			--layout/
+				--tasks/				//module			
+					--components/
+						--list-tasks/
+						--task-details/
+					--services/
+						--users.service/
+
+		--material/ 						//module
